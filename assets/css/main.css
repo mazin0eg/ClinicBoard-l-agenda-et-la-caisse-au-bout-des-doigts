@@ -24,7 +24,7 @@ nav a {
     font-weight: bold;
 }
 .login-container {
-    max-width: 400px;
+    max-width: 500px;
     margin: 0 auto;
     padding: 3rem 2rem;
     background: transparent;
@@ -97,7 +97,7 @@ nav a {
     color: white;
     padding: 1rem 2rem;
     border: none;
-    border-radius: 25px;
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
