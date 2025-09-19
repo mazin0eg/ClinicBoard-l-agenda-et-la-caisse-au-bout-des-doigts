@@ -109,3 +109,28 @@ nav a {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 87, 34, 0.3);
 }
+
+/* Switch Form Styles */
+.switch-form {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.switch-form p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.switch-link {
+    color: #ff5722;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.switch-link:hover {
+    color: #ff7043;
+    text-decoration: underline;
+}

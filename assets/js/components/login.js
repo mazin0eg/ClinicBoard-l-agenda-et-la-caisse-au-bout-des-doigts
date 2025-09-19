@@ -13,8 +13,12 @@ const login = () => {
                     <div class="form-group">
                         <input type="password" placeholder="Password" class="form-input" required>
                     </div>
-                    <button type="submit" class="register-btn">Register</button>
+                    <button type="submit" class="register-btn">Login</button>
                 </form>
+                
+                <div class="switch-form">
+                    <p>Don't have an account? <a href="/register" onclick="route(event)" class="switch-link">Register here</a></p>
+                </div>
             </div>
         </div>
     `;
