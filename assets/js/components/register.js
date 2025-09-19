@@ -27,7 +27,7 @@ const register = () => {
     `;
 };
 
-// Simple registration function
+
 window.handleRegister = function(event) {
     event.preventDefault();
     
@@ -50,14 +50,13 @@ window.handleRegister = function(event) {
     
     alert('Registration successful!');
     
-    // Use SPA routing - no page refresh, just update content
+
     window.history.pushState({}, "", '/login');
     
-    // Trigger the router to update the page content
+    // Call handleLocation if available to update the view
     if (window.handleLocation) {
         window.handleLocation();
     } else {
-        // Fallback: dispatch popstate event to trigger router
         const event = new Event('popstate');
         window.dispatchEvent(event);
     }

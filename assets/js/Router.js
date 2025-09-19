@@ -26,8 +26,38 @@ const routes = {
     404 : `<h1>404</h1><p>Page not found.</p>`
 };
 
+// Simple authentication check function
+const isAuthenticated = () => {
+    return localStorage.getItem('isLoggedIn') === 'true';
+};
+
+// Check if user should be redirected to login
+const checkAuth = (path) => {
+    const publicPages = ['/login', '/register'];
+    const isPublicPage = publicPages.includes(path);
+    const userIsAuthenticated = isAuthenticated();
+    
+    // If user is not authenticated and trying to access private page
+    if (!userIsAuthenticated && !isPublicPage) {
+        window.history.pushState({}, "", '/login');
+        return '/login';
+    }
+    
+    // If user is authenticated and trying to access login/register
+    if (userIsAuthenticated && isPublicPage) {
+        window.history.pushState({}, "", '/');
+        return '/';
+    }
+    
+    return path;
+};
+
 const handleLocation = () => {
-    const path = window.location.pathname;
+    let path = window.location.pathname;
+    
+    // Check authentication and get the correct path
+    path = checkAuth(path);
+    
     const pageContent = routes[path] || routes[404];
     
     // Don't show navigation on login and register pages
@@ -40,6 +70,9 @@ const handleLocation = () => {
         `;
     }
 }
+
+// Make handleLocation globally accessible
+window.handleLocation = handleLocation;
 
 document.addEventListener("DOMContentLoaded", () => {
     handleLocation();

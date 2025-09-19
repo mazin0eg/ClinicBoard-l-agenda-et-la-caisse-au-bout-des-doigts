@@ -6,12 +6,12 @@ const login = () => {
                     <img src="assets/icons/hospital.png" alt="Clinic Icon" />
                 </div>
                 <h2>Login</h2>
-                <form class="login-form">
+                <form class="login-form" onsubmit="return handleLogin(event)">
                     <div class="form-group">
-                        <input type="email" placeholder="E-mail Address" class="form-input" required>
+                        <input type="email" id="loginEmail" placeholder="E-mail Address" class="form-input" required>
                     </div>
                     <div class="form-group">
-                        <input type="password" placeholder="Password" class="form-input" required>
+                        <input type="password" id="loginPassword" placeholder="Password" class="form-input" required>
                     </div>
                     <button type="submit" class="register-btn">Login</button>
                 </form>
@@ -23,4 +23,41 @@ const login = () => {
         </div>
     `;
 };
+
+
+window.handleLogin = function(event) {
+    event.preventDefault();
+    
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+    
+    if (!email || !password) {
+        alert('Please fill all fields');
+        return false;
+    }
+    
+    const userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    
+   
+    if (userData.email === email && userData.password === password) {
+      
+        localStorage.setItem('isLoggedIn', 'true');
+        alert('Login successful!');
+        
+       
+        window.history.pushState({}, "", '/');
+        
+        if (window.handleLocation) {
+            window.handleLocation();
+        } else {
+            const event = new Event('popstate');
+            window.dispatchEvent(event);
+        }
+    } else {
+        alert('Invalid email or password');
+    }
+    
+    return false;
+};
+
 export default login;
