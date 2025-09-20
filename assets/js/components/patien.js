@@ -1,7 +1,7 @@
 export default function patient() {
   return `
   <div class="page-top-actions">
-    <a id="openPatientModal" class="btn-add" href="#">+ Add Patient</a>
+    <a id="openPatientModal" class="btn-add" href="#add-patient-modal">+ Add Patient</a>
   </div>
 
   <div id="add-patient-modal" class="modal">
@@ -18,6 +18,11 @@ export default function patient() {
             <option value="">Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
+          </select>
+          <select name="status" required>
+            <option value="">status</option>
+            <option value="at appointment">at an appointment</option>
+            <option value="was held">was held</option>
           </select>
           <input type="text" name="treatment" placeholder="Treatment" required>
           <input type="date" name="admission_date" required>
@@ -87,6 +92,7 @@ export function initPatientForm() {
       mobile: patientForm.mobile.value,
       address: patientForm.address.value,
       gender: patientForm.gender.value,
+      status: patientForm.status.value,
       treatment: patientForm.treatment.value,
       admission_date: patientForm.admission_date.value,
       notes: patientForm.notes.value,
@@ -124,7 +130,7 @@ export function renderPatients() {
       <td><i class="fas fa-phone"></i> ${p.mobile || ""}</td>
       <td>${p.admission_date || ""}</td>
       <td><i class="fas fa-map-marker-alt"></i> ${p.address || ""}</td>
-      <td>Pending</td>
+      <td><i class="fas fa-map-marker-alt"></i> ${p.status || ""}</td>
       <td>
         <i class="action-icon edit fas fa-edit"></i>
         <i class="action-icon delete fas fa-trash"></i>
