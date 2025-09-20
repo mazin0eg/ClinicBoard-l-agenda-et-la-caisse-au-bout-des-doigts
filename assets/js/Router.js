@@ -1,6 +1,6 @@
 import nav from "../js/components/nav.js";
 import dashboard from "./components/dashboard.js";
-import patient, { initPatientModal } from "./components/patien.js";
+import patient, { initPatientModal , initPatientForm} from "./components/patien.js";
 import appointments from "./components/apoinments.js";
 import login from "./components/login.js";
 import register from "./components/register.js";
@@ -55,12 +55,11 @@ const checkAuth = (path) => {
 const handleLocation = () => {
     let path = window.location.pathname;
     path = '/' + path.split('\/')[path.split('\/').length -1];
-    // Check authentication and get the correct path
     path = checkAuth(path);
     
     const pageContent = routes[path] || routes[404];
     
-    // Don't show navigation on login and register pages
+
     if (path === '/login' || path === '/register') {
         document.getElementById("root").innerHTML = pageContent;
     } else {
@@ -72,10 +71,11 @@ const handleLocation = () => {
 
     if (path === '/patient') {
         initPatientModal();
+        initPatientForm();
     }
 }
 
-// Make handleLocation globally accessible
+
 window.handleLocation = handleLocation;
 
 document.addEventListener("DOMContentLoaded", () => {

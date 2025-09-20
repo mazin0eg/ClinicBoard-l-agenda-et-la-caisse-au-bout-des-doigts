@@ -2,42 +2,36 @@
 const patient = () => {
   return `
   <!-- Add Patient Button -->
-  <div class="page-top-actions">
-    <a class="btn-add" id="openPatientModal" href="javascript:void(0)">+ Add Patient</a>
-  </div>
+  <!-- Add Patient Button -->
+<div class="page-top-actions">
+  <a class="btn-add" href="#add-patient-modal">+ Add Patient</a>
+</div>
 
-  <!-- Modal -->
-  <div id="add-patient-modal" class="modal">
-    <div class="modal-content">
-      <span class="close" id="closePatientModal">&times;</span>
-      <h2>Add Patient</h2>
-      <form id="patientForm">
-        <label>Full Name:</label>
-        <input type="text" name="fullname" required>
-
-        <label>Gender:</label>
+<!-- Modal -->
+<div id="add-patient-modal" class="modal">
+  <div class="modal-overlay"></div>
+  <div class="modal-content">
+    <a href="#" class="close">&times;</a>
+    <h2>Add Patient</h2>
+    <form id="patientForm">
+      <div class="form-grid">
+        <input type="text" name="fullname" placeholder="Full Name" required>
+        <input type="tel" name="mobile" placeholder="Mobile" required>
+        <input type="text" name="address" placeholder="Address" required>
         <select name="gender" required>
-          <option value="">--Select--</option>
+          <option value="">Gender</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
-
-        <label>Treatment:</label>
-        <input type="text" name="treatment" required>
-
-        <label>Mobile:</label>
-        <input type="tel" name="mobile" required>
-
-        <label>Admission Date:</label>
+        <input type="text" name="treatment" placeholder="Treatment" required>
         <input type="date" name="admission_date" required>
-
-        <label>Address:</label>
-        <textarea name="address" required></textarea>
-
-        <button type="submit">Save Patient</button>
-      </form>
-    </div>
+      </div>
+      <textarea name="notes" placeholder="Additional Notes..." rows="3"></textarea>
+      <button type="submit" class="btn-submit">Save Patient</button>
+    </form>
   </div>
+</div>
+
 
   <!-- Patients Table -->
   <div class="patients-container">
@@ -79,31 +73,7 @@ const patient = () => {
     </div>
   </div>
 
-  <!-- Modal CSS -->
-  <style>
-    .modal {
-      display: none; 
-      position: fixed; 
-      z-index: 1000; 
-      left: 0; top: 0;
-      width: 100%; height: 100%; 
-      background-color: rgba(0,0,0,0.5); 
-    }
-
-    .modal-content {
-      background: #fff; 
-      margin: 10% auto; 
-      padding: 20px; 
-      border-radius: 8px;
-      width: 400px;
-    }
-
-    .close {
-      float: right; 
-      font-size: 22px; 
-      cursor: pointer;
-    }
-  </style>
+ 
   `;
 };
 
@@ -129,5 +99,32 @@ export function initPatientModal() {
     if (e.target === modal) {
       modal.style.display = "none";
     }
+  });
+}
+
+
+ export function initPatientForm() {
+  const patientForm = document.getElementById("patientForm");
+  if (!patientForm) return; // safety check
+
+  patientForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const patientData = {
+      fullname: patientForm.fullname.value,
+      mobile: patientForm.mobile.value,
+      address: patientForm.address.value,
+      gender: patientForm.gender.value,
+      treatment: patientForm.treatment.value,
+      admission_date: patientForm.admission_date.value,
+      notes: patientForm.notes.value,
+    };
+
+    let patients = JSON.parse(localStorage.getItem("patients")) || [];
+    patients.push(patientData);
+    localStorage.setItem("patients", JSON.stringify(patients));
+
+    alert("Patient saved successfully ✅");
+    patientForm.reset();
   });
 }
