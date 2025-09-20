@@ -1,39 +1,33 @@
-// patient.js
-const patient = () => {
+export default function patient() {
   return `
-  <!-- Add Patient Button -->
-  <!-- Add Patient Button -->
-<div class="page-top-actions">
-  <a class="btn-add" href="#add-patient-modal">+ Add Patient</a>
-</div>
-
-<!-- Modal -->
-<div id="add-patient-modal" class="modal">
-  <div class="modal-overlay"></div>
-  <div class="modal-content">
-    <a href="#" class="close">&times;</a>
-    <h2>Add Patient</h2>
-    <form id="patientForm">
-      <div class="form-grid">
-        <input type="text" name="fullname" placeholder="Full Name" required>
-        <input type="tel" name="mobile" placeholder="Mobile" required>
-        <input type="text" name="address" placeholder="Address" required>
-        <select name="gender" required>
-          <option value="">Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-        <input type="text" name="treatment" placeholder="Treatment" required>
-        <input type="date" name="admission_date" required>
-      </div>
-      <textarea name="notes" placeholder="Additional Notes..." rows="3"></textarea>
-      <button type="submit" class="btn-submit">Save Patient</button>
-    </form>
+  <div class="page-top-actions">
+    <a id="openPatientModal" class="btn-add" href="#">+ Add Patient</a>
   </div>
-</div>
 
+  <div id="add-patient-modal" class="modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <a href="#" id="closePatientModal" class="close">&times;</a>
+      <h2>Add Patient</h2>
+      <form id="patientForm">
+        <div class="form-grid">
+          <input type="text" name="fullname" placeholder="Full Name" required>
+          <input type="tel" name="mobile" placeholder="Mobile" required>
+          <input type="text" name="address" placeholder="Address" required>
+          <select name="gender" required>
+            <option value="">Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <input type="text" name="treatment" placeholder="Treatment" required>
+          <input type="date" name="admission_date" required>
+        </div>
+        <textarea name="notes" placeholder="Additional Notes..." rows="3"></textarea>
+        <button type="submit" class="btn-submit">Save Patient</button>
+      </form>
+    </div>
+  </div>
 
-  <!-- Patients Table -->
   <div class="patients-container">
     <div class="patients-header">
       <h2>Patients</h2>
@@ -57,29 +51,14 @@ const patient = () => {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td><span class="patient-initials">AC</span> Ashton Cox</td>
-            <td>Malaria</td>
-            <td><span class="gender-tag male">male</span></td>
-            <td><i class="fas fa-phone"></i> 1234567...</td>
-            <td>01/15/2024</td>
-            <td><i class="fas fa-map-marker-alt"></i> 11, Shya...</td>
-            <td>Recovered</td>
-            <td><i class="action-icon edit fas fa-edit"></i> <i class="action-icon delete fas fa-trash"></i></td>
-          </tr>
-        </tbody>
+        <tbody id="patientsTableBody"></tbody>
       </table>
     </div>
   </div>
-
- 
   `;
-};
+}
 
-export default patient;
-
-// attach modal events after rendering
+// Modal
 export function initPatientModal() {
   const openBtn = document.getElementById("openPatientModal");
   const closeBtn = document.getElementById("closePatientModal");
@@ -87,27 +66,20 @@ export function initPatientModal() {
 
   if (!openBtn || !closeBtn || !modal) return;
 
-  openBtn.addEventListener("click", () => {
-    modal.style.display = "block";
-  });
-
-  closeBtn.addEventListener("click", () => {
-    modal.style.display = "none";
-  });
+  openBtn.addEventListener("click", () => modal.style.display = "block");
+  closeBtn.addEventListener("click", () => modal.style.display = "none");
 
   window.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
+    if (e.target === modal) modal.style.display = "none";
   });
 }
 
-
- export function initPatientForm() {
+// Form
+export function initPatientForm() {
   const patientForm = document.getElementById("patientForm");
-  if (!patientForm) return; // safety check
+  if (!patientForm) return;
 
-  patientForm.addEventListener("submit", function (e) {
+  patientForm.addEventListener("submit", function(e) {
     e.preventDefault();
 
     const patientData = {
@@ -126,5 +98,39 @@ export function initPatientModal() {
 
     alert("Patient saved successfully ✅");
     patientForm.reset();
+
+    renderPatients();
   });
 }
+
+export function renderPatients() {
+  const tbody = document.getElementById("patientsTableBody");
+  if (!tbody) return;
+
+  const patients = JSON.parse(localStorage.getItem("patients")) || [];
+  tbody.innerHTML = "";
+
+  patients.forEach(p => {
+    const initials = (p.fullname || "")
+      .split(" ")
+      .map(n => n[0] ? n[0].toUpperCase() : "")
+      .join("");
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><span class="patient-initials">${initials}</span> ${p.fullname || ""}</td>
+      <td>${p.treatment || ""}</td>
+      <td><span class="gender-tag ${p.gender ? p.gender.toLowerCase() : ""}">${p.gender || ""}</span></td>
+      <td><i class="fas fa-phone"></i> ${p.mobile || ""}</td>
+      <td>${p.admission_date || ""}</td>
+      <td><i class="fas fa-map-marker-alt"></i> ${p.address || ""}</td>
+      <td>Pending</td>
+      <td>
+        <i class="action-icon edit fas fa-edit"></i>
+        <i class="action-icon delete fas fa-trash"></i>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+  
