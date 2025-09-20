@@ -9,16 +9,16 @@ const nav = () => {
         </div>
         
         <div class="nav-links">
-          <a href="/" onclick="route(event)" class="nav-link">
+          <a href="./" onclick="route(event)" class="nav-link">
             <span>📊</span> Dashboard
           </a>
-          <a href="/patient" onclick="route(event)" class="nav-link">
+          <a href="./patient" onclick="route(event)" class="nav-link">
             <span>👥</span> Patients
           </a>
-          <a href="/appointment" onclick="route(event)" class="nav-link">
+          <a href="./appointment" onclick="route(event)" class="nav-link">
             <span>📅</span> Appointments
           </a>
-          <a href="/recette" onclick="route(event)" class="nav-link">
+          <a href="./recette" onclick="route(event)" class="nav-link">
             <span>💰</span> Recette
           </a>
         </div>

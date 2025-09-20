@@ -1,6 +1,6 @@
 import nav from "../js/components/nav.js";
 import dashboard from "./components/dashboard.js";
-import patient from "./components/patien.js";
+import patient, { initPatientModal } from "./components/patien.js";
 import appointments from "./components/apoinments.js";
 import login from "./components/login.js";
 import register from "./components/register.js";
@@ -54,7 +54,7 @@ const checkAuth = (path) => {
 
 const handleLocation = () => {
     let path = window.location.pathname;
-    
+    path = '/' + path.split('\/')[path.split('\/').length -1];
     // Check authentication and get the correct path
     path = checkAuth(path);
     
@@ -68,6 +68,10 @@ const handleLocation = () => {
             ${nav()}
             <div id="page-content">${pageContent}</div>
         `;
+    }
+
+    if (path === '/patient') {
+        initPatientModal();
     }
 }
 
