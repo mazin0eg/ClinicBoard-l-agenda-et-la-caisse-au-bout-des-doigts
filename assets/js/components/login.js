@@ -17,7 +17,7 @@ const login = () => {
                 </form>
                 
                 <div class="switch-form">
-                    <p>Don't have an account? <a href="/register" onclick="route(event)" class="switch-link">Register here</a></p>
+                    <p>Don't have an account? <a href="./register" onclick="route(event)" class="switch-link">Register here</a></p>
                 </div>
             </div>
         </div>
@@ -42,10 +42,9 @@ window.handleLogin = function(event) {
     if (userData.email === email && userData.password === password) {
       
         localStorage.setItem('isLoggedIn', 'true');
-        alert('Login successful!');
         
        
-        window.history.pushState({}, "", '/');
+        window.history.pushState({}, "", './');
         
         if (window.handleLocation) {
             window.handleLocation();

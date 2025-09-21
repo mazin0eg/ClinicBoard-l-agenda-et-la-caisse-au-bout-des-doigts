@@ -37,7 +37,7 @@ window.handleLogout = function() {
     alert('Logged out successfully!');
     
   
-    window.history.pushState({}, "", '/login');
+    window.history.pushState({}, "", './login');
     window.handleLocation();
 };
 export default nav;

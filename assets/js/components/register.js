@@ -20,7 +20,7 @@ const register = () => {
                 </form>
                 
                 <div class="switch-form">
-                    <p>Already have an account? <a href="/login" onclick="route(event)" class="switch-link">Login here</a></p>
+                    <p>Already have an account? <a href="./login" onclick="route(event)" class="switch-link">Login here</a></p>
                 </div>
             </div>
         </div>
