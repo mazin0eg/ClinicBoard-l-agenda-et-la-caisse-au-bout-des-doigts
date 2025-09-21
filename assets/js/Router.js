@@ -1,7 +1,7 @@
 import nav from "../js/components/nav.js";
-import dashboard from "./components/dashboard.js";
+import dashboard, { initDashboard } from "./components/dashboard.js";
 import patient, { initPatientModal , initPatientForm , renderPatients} from "./components/patien.js";
-import appointments from "./components/apoinments.js";
+import appointments, { initAppointmentModal, initAppointmentForm, renderAppointments } from "./components/apoinments.js";
 import login from "./components/login.js";
 import register from "./components/register.js";
 import recette from "./components/recette.js";  
@@ -73,6 +73,14 @@ const handleLocation = () => {
         initPatientModal();
         initPatientForm();
         renderPatients();
+    }
+    if (path === '/appointment') {
+        initAppointmentModal();
+        initAppointmentForm();
+        renderAppointments();
+    }
+    if (path === '/') {
+        initDashboard();
     }
 }
 

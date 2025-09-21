@@ -221,7 +221,8 @@ body {
 
 
 
-.patients-container {
+.patients-container,
+.appointments-container {
   background-color: #DAE1F3;
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.08);
@@ -239,7 +240,8 @@ body {
 }
 
 /* Header with search and Add button */
-.patients-header {
+.patients-header,
+.appointments-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -329,10 +331,36 @@ tbody tr:hover { background: #f8f9fa; }
 .gender-tag.male { background: #e2f5e5; color: #2f9e67; }
 .gender-tag.female { background: #efe6fe; color: #7b4bd6; }
 
+/* Appointment status tags */
+.status-tag {
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.status-tag.scheduled { background: #e9f2ff; color: #1d6fdc; }
+.status-tag.completed { background: #e6f7ec; color: #2f9e67; }
+.status-tag.cancelled { background: #fdecec; color: #d64545; }
+
 /* Action "icons" using emoji for no-CDN setup */
 .action-icon { cursor: pointer; margin: 0 6px; font-size: 16px; }
 .action-icon.edit { color: #4a90e2; }
 .action-icon.delete { color: #eb5757; }
+
+/* Table row action buttons */
+.row-actions { display: flex; gap: 8px; align-items: center; }
+.table-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.btn-edit { background: #eef4ff; color: #1d4ed8; border-color: #c7d2fe; }
+.btn-edit:hover { background: #e0eaff; }
+.btn-delete { background: #ffefef; color: #b91c1c; border-color: #fecaca; }
+.btn-delete:hover { background: #ffe5e5; }
 
 /* Modal wrapper */
 .modal {
@@ -434,4 +462,31 @@ input:focus, select:focus, textarea:focus {
 /* Small screens: stack form fields */
 @media (max-width: 640px) {
   .form-grid { grid-template-columns: 1fr; }
+}
+
+/* Dashboard styles */
+.dashboard-container { display: flex; flex-direction: column; gap: 24px; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+.stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.stat-card .label { color: #6b7280; font-size: 12px; margin-bottom: 6px; }
+.stat-card .value { font-size: 24px; font-weight: 700; color: #111827; }
+
+.two-column { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+.panel { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; }
+.panel.side { align-self: start; }
+.panel-header { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; }
+.panel-header h3 { margin: 0; font-size: 16px; color: #111827; }
+.recette-amount { padding: 24px 16px; font-size: 28px; font-weight: 700; color: #111827; }
+
+@media (max-width: 900px) {
+  .two-column { grid-template-columns: 1fr; }
 }

@@ -68,14 +68,23 @@ export function initPatientModal() {
   const openBtn = document.getElementById("openPatientModal");
   const closeBtn = document.getElementById("closePatientModal");
   const modal = document.getElementById("add-patient-modal");
+  const overlay = modal ? modal.querySelector('.modal-overlay') : null;
 
   if (!openBtn || !closeBtn || !modal) return;
 
-  openBtn.addEventListener("click", () => modal.style.display = "block");
+  openBtn.addEventListener("click", () => (modal.style.display = "flex"));
   closeBtn.addEventListener("click", () => modal.style.display = "none");
 
   window.addEventListener("click", (e) => {
     if (e.target === modal) modal.style.display = "none";
+  });
+
+  if (overlay) {
+    overlay.addEventListener('click', () => (modal.style.display = 'none'));
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') modal.style.display = 'none';
   });
 }
 
@@ -104,6 +113,10 @@ export function initPatientForm() {
 
     alert("Patient saved successfully ✅");
     patientForm.reset();
+
+    // Close modal after save
+    const modal = document.getElementById("add-patient-modal");
+    if (modal) modal.style.display = "none";
 
     renderPatients();
   });
